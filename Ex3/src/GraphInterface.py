@@ -48,6 +48,7 @@ class GraphInterface:
 
         Note: If the edge already exists or one of the nodes dose not exists the functions will do nothing
         """
+
         raise NotImplementedError
 
     def add_node(self, node_id: int, pos: tuple = None) -> bool:
