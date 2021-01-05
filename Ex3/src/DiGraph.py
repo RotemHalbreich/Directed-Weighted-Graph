@@ -4,9 +4,9 @@ from GraphInterface import GraphInterface
 
 class DiGraph(GraphInterface):
     mc = 0
-    def __init__(self):
-        self.graph = {}
 
+    def __init__(self, g: GraphInterface = {}):
+        self.graph = {}
 
     def increment(self, b) -> bool:
         self.mc = self.mc + 1 if b else self.mc
@@ -79,7 +79,6 @@ class DiGraph(GraphInterface):
 
     def __repr__(self) -> str:
         return self.graph.__str__()
-
 
     def as_dict(self) -> dict:
         tmp_dict = self.__dict__

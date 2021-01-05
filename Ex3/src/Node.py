@@ -64,8 +64,8 @@ class Node:
     def get_key(self) -> int:
         return self.key
 
-    def set_prev(self, n) -> None:
-        self.prev = n
+    def set_prev(self, p) -> None:
+        self.prev = p
 
     def get_prev(self):
         return self.prev

@@ -10,8 +10,11 @@ from queue import PriorityQueue
 class GraphAlgo(GraphAlgoInterface):
     visited, unvisited, finish = 1, -1, 0
 
-    def __init__(self, graph: DiGraph = DiGraph()):
-        self.graph = graph
+    def __init__(self, graph: DiGraph = None):
+        if graph:
+            self.graph = graph
+        else:
+            self.graph = DiGraph()
 
     def get_graph(self) -> GraphInterface:
         return self.graph
@@ -44,7 +47,7 @@ class GraphAlgo(GraphAlgoInterface):
                 self.graph.add_edge(id1=int(k), id2=int(ni), weight=w)
 
     def load_from_json(self, file_name: str) -> bool:
-        #self.__init__()
+
         try:
             with open(file_name, "r") as f:
                 new_graph = json.load(f)
@@ -140,4 +143,3 @@ if __name__ == '__main__':
     # print(g.shortest_path(4, 2))
     g.load_from_json("../data/A5")
     print(g)
-
