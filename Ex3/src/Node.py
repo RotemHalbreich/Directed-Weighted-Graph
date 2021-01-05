@@ -52,10 +52,13 @@ class Node:
         return f"key:{self.key},inside:{self.get_inside()},outside:{self.get_outside()}"
 
     def __repr__(self) -> str:
-        return f"key:{self.key},inside:{self.get_inside()},outside:{self.get_outside()}"
+        return f"key:{self.key},pos:{self.pos},inside:{self.get_inside()},outside:{self.get_outside()}"
 
     def __eq__(self, other) -> bool:
         return other.key == self.key and other.pos == self.pos
+
+    def as_dict(self) -> dict:
+        return self.__dict__
 
 
 if __name__ == '__main__':
@@ -70,4 +73,3 @@ if __name__ == '__main__':
     print(n.remove_outside(2))
     print(n.remove_outside(2))
     print(n)
-
