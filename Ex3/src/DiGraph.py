@@ -3,9 +3,10 @@ from GraphInterface import GraphInterface
 
 
 class DiGraph(GraphInterface):
+    mc = 0
     def __init__(self):
         self.graph = {}
-        self.mc = 0
+
 
     def increment(self, b) -> bool:
         self.mc = self.mc + 1 if b else self.mc
@@ -70,14 +71,18 @@ class DiGraph(GraphInterface):
         self.mc += 1
         return True
 
-    def __str__(self)->str:
+    def get_node(self, node_id):
+        return self.graph.get(node_id)
+
+    def __str__(self) -> str:
         return self.graph.__str__()
 
-    def __repr__(self)->str:
+    def __repr__(self) -> str:
         return self.graph.__str__()
 
-    def as_dict(self)->dict:
-        tmp_dict=self.__dict__
+
+    def as_dict(self) -> dict:
+        tmp_dict = self.__dict__
         del tmp_dict["mc"]
         return tmp_dict
 
@@ -110,3 +115,4 @@ if __name__ == '__main__':
     print(g)
     print(g.all_out_edges_of_node(4))
     print(g.all_in_edges_of_node(3))
+    print(g.get_all_v())

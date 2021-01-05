@@ -7,6 +7,7 @@ class Node:
         self.pos = pos
         self.inside = {}
         self.outside = {}
+        self.prev = None
 
     def add_inside(self, node_id: int, weight: float) -> bool:
         if self.key is node_id:
@@ -48,6 +49,27 @@ class Node:
     def get_inside(self) -> list:
         return self.inside
 
+    def set_value(self, v) -> None:
+        self.value = v
+
+    def get_value(self) -> float:
+        return self.value
+
+    def set_tag(self, t) -> None:
+        self.tag = t
+
+    def get_tag(self) -> int:
+        return self.tag
+
+    def get_key(self) -> int:
+        return self.key
+
+    def set_prev(self, n) -> None:
+        self.prev = n
+
+    def get_prev(self):
+        return self.prev
+
     def __str__(self) -> str:
         return f"key:{self.key},inside:{self.get_inside()},outside:{self.get_outside()}"
 
@@ -56,6 +78,9 @@ class Node:
 
     def __eq__(self, other) -> bool:
         return other.key == self.key and other.pos == self.pos
+
+    def __lt__(self, other):
+        return self.value < other.value
 
     def as_dict(self) -> dict:
         return self.__dict__
