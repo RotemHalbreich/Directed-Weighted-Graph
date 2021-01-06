@@ -43,10 +43,10 @@ class Node:
             return True
         return False
 
-    def get_outside(self) -> list:
+    def get_outside(self) -> dict:
         return self.outside
 
-    def get_inside(self) -> list:
+    def get_inside(self) -> dict:
         return self.inside
 
     def set_value(self, v) -> None:

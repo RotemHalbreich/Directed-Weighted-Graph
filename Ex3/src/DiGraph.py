@@ -116,3 +116,4 @@ if __name__ == '__main__':
     print(g.all_out_edges_of_node(4))
     print(g.all_in_edges_of_node(3))
     print(g.get_all_v())
+
