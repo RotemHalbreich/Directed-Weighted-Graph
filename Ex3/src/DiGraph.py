@@ -5,7 +5,7 @@ from GraphInterface import GraphInterface
 class DiGraph(GraphInterface):
     mc = 0
 
-    def __init__(self, g: GraphInterface = {}):
+    def __init__(self):
         self.graph = {}
 
     def increment(self, b) -> bool:
@@ -18,6 +18,7 @@ class DiGraph(GraphInterface):
     def e_size(self) -> int:
         ans = 0
         for node in self.graph.values():
+            t=len(node.get_outside())
             ans += len(node.get_outside())
         return ans
 
@@ -84,7 +85,7 @@ class DiGraph(GraphInterface):
         tmp_dict = self.__dict__
         del tmp_dict["mc"]
         return tmp_dict
-
+    #todo make equals function
 
 if __name__ == '__main__':
     g = DiGraph()

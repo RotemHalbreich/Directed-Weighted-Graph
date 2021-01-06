@@ -127,7 +127,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def __repr__(self) -> str:
         return self.graph.__str__()
-
+    # todo make equals function
 
 if __name__ == '__main__':
     g = GraphAlgo()

@@ -84,7 +84,7 @@ class Node:
 
     def as_dict(self) -> dict:
         return self.__dict__
-
+    #todo make equals function
 
 if __name__ == '__main__':
     n = Node(1)
