@@ -60,7 +60,7 @@ def check1():
     print(g_algo.shortest_path(0, 3))
     print(g_algo.shortest_path(3, 1))
     g_algo.save_to_json(file + '_saved')
-   # g_algo.plot_graph()
+    g_algo.plot_graph()
 
 
 def check2():
@@ -82,7 +82,7 @@ def check2():
     print(dist, path)
     print(g_algo.connected_component(0))
     print(g_algo.connected_components())
-    # g_algo.plot_graph()
+    g_algo.plot_graph()
 
 
 if __name__ == '__main__':

@@ -6,6 +6,8 @@ from DiGraph import DiGraph
 from GraphInterface import GraphInterface
 from queue import PriorityQueue
 from collections import deque
+import matplotlib.pyplot as plt
+from matplotlib.patches import ConnectionPatch
 
 
 class GraphAlgo(GraphAlgoInterface):
@@ -204,7 +206,48 @@ class GraphAlgo(GraphAlgoInterface):
         return scc
 
     def plot_graph(self) -> None:
-        pass
+        fig, ax = plt.subplots()
+        s=set()
+        coordsA = "data"
+        coordsB = "data"
+        for node in self.graph.get_all_v().keys():
+            x, y = uniform(0.0, 100), uniform(0.0, 100)
+            if self.graph.get_node(node).get_pos():
+                x, y = self.graph.get_node(node).get_pos()
+            else:
+                self.graph.get_node(node).set_pos((x,y))
+            xyA = (x, y)
+            for e in self.graph.all_out_edges_of_node(node).keys():
+                s.add(e)
+                s.add(node)
+                x1, y1 = uniform(0.0, 100), uniform(0.0, 100)
+                if self.graph.get_node(e).get_pos():
+                    x1, y1 = self.graph.get_node(e).get_pos()
+                else:
+                    self.graph.get_node(e).set_pos((x1, y1))
+                xyB = (x1, y1)
+                con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
+                                      arrowstyle="->", shrinkA=5, shrinkB=5,
+                                      mutation_scale=20, fc="w")
+                ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
+                ax.add_artist(con)
+                xyB=0
+        for node in self.graph.get_all_v().keys():
+            if node not in s:
+                x, y = uniform(0.0, 100), uniform(0.0, 100)
+                if self.graph.get_node(node).get_pos():
+                    x, y = self.graph.get_node(node).get_pos()
+                else:
+                    self.graph.get_node(node).set_pos((x, y))
+                xyA = (x, y)
+                xyB=(x,y)
+                con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
+                                      arrowstyle="->", shrinkA=5, shrinkB=5,
+                                      mutation_scale=20, fc="w")
+                ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
+                ax.add_artist(con)
+
+        plt.show()
 
     def __str__(self) -> str:
         return self.graph.__str__()
@@ -220,17 +263,10 @@ if __name__ == '__main__':
     g.graph.add_node(2)
     g.graph.add_node(3)
     g.graph.add_node(4)
-    g.graph.add_node(5)
-    g.graph.add_edge(1, 2, 1)
-    g.graph.add_edge(2, 1, 1)
-    g.graph.add_edge(1, 3, 1)
-    g.graph.add_edge(3, 1, 1)
-    g.graph.add_edge(4, 1, 1)
-    g.graph.add_edge(4, 2, 1)
-    g.graph.add_edge(4, 5, 1)
-    g.graph.add_edge(5, 4, 1)
 
-    print(g.connected_component(1))
-    print(g.connected_component(2))
-    print(g.connected_component(5))
-    print(g.connected_components())
+    g.graph.add_edge(1,2,10)
+    g.graph.add_edge(1,3,10)
+    g.graph.add_edge(3,1,10)
+    g.graph.add_edge(3,2,10)
+    g.graph.add_edge(2,1,10)
+    g.plot_graph()

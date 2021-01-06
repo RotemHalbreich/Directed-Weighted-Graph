@@ -70,6 +70,10 @@ class Node:
     def get_prev(self):
         return self.prev
 
+    def get_pos(self)->tuple:
+        return self.pos
+    def set_pos(self,p:tuple)->None:
+        self.pos=p
     def __str__(self) -> str:
         return f"key:{self.key},inside:{self.get_inside()},outside:{self.get_outside()}"
 
@@ -84,7 +88,8 @@ class Node:
 
     def as_dict(self) -> dict:
         return self.__dict__
-    #todo make equals function
+    # todo make equals function
+
 
 if __name__ == '__main__':
     n = Node(1)
