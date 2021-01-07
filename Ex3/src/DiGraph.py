@@ -151,7 +151,9 @@ class DiGraph(GraphInterface):
         except Exception as e:
             print(e)
         return tmp_dict
-    #todo make equals function
+
+
+
 
 if __name__ == '__main__':
     g = DiGraph()
