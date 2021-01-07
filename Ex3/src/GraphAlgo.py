@@ -8,7 +8,7 @@ from queue import PriorityQueue
 from collections import deque
 import matplotlib.pyplot as plt
 from matplotlib.patches import ConnectionPatch
-
+import time
 
 class GraphAlgo(GraphAlgoInterface):
     """This abstract class represents an interface of a graph."""
@@ -153,6 +153,7 @@ class GraphAlgo(GraphAlgoInterface):
         Notes:
         If the graph is None or id1 is not in the graph, the function should return an empty list []
         """
+
         if self.graph.get_node(id1) is None:
             return []
         if self.graph.v_size() == 1:
@@ -161,6 +162,7 @@ class GraphAlgo(GraphAlgoInterface):
         reverse_graph = self.sub_reverse_graph(id1)
         straight_list = self.direction(id1, self.graph)
         reverse_list = self.direction(id1, reverse_graph)
+
         return self.union(straight_list, reverse_list)
 
     def direction(self, id1: int, g: DiGraph) -> list:
@@ -204,6 +206,7 @@ class GraphAlgo(GraphAlgoInterface):
         Notes:
         If the graph is None the function should return an empty list []
         """
+
         if self.graph is None:
             return []
         scc, li = [], []
@@ -212,6 +215,7 @@ class GraphAlgo(GraphAlgoInterface):
                 connected = self.connected_component(node)
                 li.extend(connected)
                 scc.append(connected)
+
         return scc
 
     def set_pos_for_all(self):
@@ -234,7 +238,8 @@ class GraphAlgo(GraphAlgoInterface):
             n.append(node)
             for ni in self.graph.all_out_edges_of_node(node):
                 xyB = self.graph.get_node(ni).get_pos()
-                con = ConnectionPatch(xyA, xyB, "data", "data", arrowstyle="-|>", shrinkA=5, shrinkB=5,mutation_scale=13, fc="r")
+                con = ConnectionPatch(xyA, xyB, "data", "data", arrowstyle="-|>", shrinkA=5, shrinkB=5,
+                                      mutation_scale=13, fc="r")
                 ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
                 ax.add_artist(con)
 
@@ -309,18 +314,18 @@ class GraphAlgo(GraphAlgoInterface):
 
 if __name__ == '__main__':
     g = GraphAlgo()
-    for i in range(10):
-        g.graph.add_node(i)
-    for i in range(1, 10):
-        g.graph.add_edge(i - 1, i, i)
-        if i % 2 == 0:
-            g.graph.add_edge(i, i - 1, i)
-    g.graph.add_node(123)
-    g.plot_graph()
-    # print(g)
+    g.load_from_json("../data/G_10000_80000_0.json")
+
+    print(g.shortest_path(0 ,60))
+    # g.graph.add_node(123)
     # g.save_to_json("json_test.json")
     # g.load_from_json("json_test.json")
-    g.load_from_json("../data/T0.json")
-    g.plot_graph()
-    g.save_to_json("json_test.json")
-    print(g)
+    # g.load_from_json("../data/T0.json")
+    # g.save_to_json("json_test.json")
+    # # print(g)
+    # # g.save_to_json("json_test.json")
+    # # g.load_from_json("json_test.json")
+    # g.load_from_json("../data/T0.json")
+    # g.plot_graph()
+    # g.save_to_json("json_test.json")
+    # print(g)
