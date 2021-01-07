@@ -87,7 +87,9 @@ class Node:
         return self.value < other.value
 
     def as_dict(self) -> dict:
-        return self.__dict__
+        tmp_dict= self.__dict__
+        return tmp_dict
+
     # todo make equals function
 
 

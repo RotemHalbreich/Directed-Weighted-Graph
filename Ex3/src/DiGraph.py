@@ -145,7 +145,11 @@ class DiGraph(GraphInterface):
 
     def as_dict(self) -> dict:
         tmp_dict = self.__dict__
-        del tmp_dict["mc"]
+
+        try:
+            del tmp_dict["mc"]
+        except Exception as e:
+            print(e)
         return tmp_dict
     #todo make equals function
 

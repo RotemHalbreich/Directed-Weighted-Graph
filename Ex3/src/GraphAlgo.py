@@ -60,6 +60,7 @@ class GraphAlgo(GraphAlgoInterface):
         @param file_name: The path to the json file
         @returns True if the loading was successful, False o.w.
         """
+        self.__init__()
         try:
             with open(file_name, "r") as f:
                 new_graph = json.load(f)
@@ -80,7 +81,9 @@ class GraphAlgo(GraphAlgoInterface):
         Saves the graph in JSON format to a file
         @param file_name: The path to the out file
         @return: True if the save was successful, False o.w.
+
         """
+
         try:
             with open(file_name, "w") as f:
                 json.dump(self.graph, default=self.encoder, indent=4, fp=f)
@@ -110,20 +113,6 @@ class GraphAlgo(GraphAlgoInterface):
         @param id1: The start node id
         @param id2: The end node id
         @return: The distance of the path, a list of the nodes ids that the path goes through
-
-        Example:
-#      >>> from GraphAlgo import GraphAlgo
-#       >>> g_algo = GraphAlgo()
-#        >>> g_algo.addNode(0)
-#        >>> g_algo.addNode(1)
-#        >>> g_algo.addNode(2)
-#        >>> g_algo.addEdge(0,1,1)
-#        >>> g_algo.addEdge(1,2,4)
-#        >>> g_algo.shortestPath(0,1)
-#        (1, [0, 1])
-#        >>> g_algo.shortestPath(0,2)
-#        (5, [0, 1, 2])
-
         Notes:
         If there is no path between id1 and id2, or one of them dose not exist the function returns (float('inf'),[])
         More info:
@@ -154,39 +143,6 @@ class GraphAlgo(GraphAlgoInterface):
                     ni.set_prev(curr_node)
                 curr_node.set_tag(self.visited)
         return float('inf'), []
-
-    # def connected_component(self, id1: int) -> list:
-    #     if self.graph.get_node(id1) is None:
-    #         return []
-    #     if self.graph.v_size() == 1:
-    #         return [id1]
-    #     self.init_algorithm_graph()
-    #     d = deque()
-    #     d.append(id1)
-    #     reverse_graph = DiGraph()
-    #     reverse_graph.add_node(node_id=id1)
-    #     straight_list = [id1]
-    #     while len(d) != 0:
-    #         curr_node = d.popleft()
-    #         for ni in self.graph.all_out_edges_of_node(curr_node).keys():
-    #             reverse_graph.add_node(ni)
-    #             w = self.graph.get_node(curr_node).get_outside().get(ni)
-    #             reverse_graph.add_edge(ni, curr_node, w)
-    #             if self.graph.get_node(ni).get_tag() is self.unvisited:
-    #                 d.append(ni)
-    #                 self.graph.get_node(ni).set_tag(self.visited)
-    #                 straight_list.append(ni)
-    #     d.append(id1)
-    #     reverse_list = [id1]
-    #     while len(d) != 0:
-    #         curr_node = d.popleft()
-    #         for ni in reverse_graph.all_out_edges_of_node(curr_node).keys():
-    #             if reverse_graph.get_node(ni).get_tag() is self.unvisited:
-    #                 d.append(ni)
-    #                 reverse_graph.get_node(ni).set_tag(self.visited)
-    #                 reverse_list.append(ni)
-    #
-    #     return self.union(straight_list, reverse_list)
 
     def connected_component(self, id1: int) -> list:
         """
@@ -258,60 +214,90 @@ class GraphAlgo(GraphAlgoInterface):
                 scc.append(connected)
         return scc
 
-    def plot_graph(self) -> None:
-        """
-        Plots the graph.
-        If the nodes have a position, the nodes will be placed there.
-        Otherwise, they will be placed in a random but elegant manner.
-        @return: None
-        """
-        fig, ax = plt.subplots()
-        s = set()
-        coordsA = "data"
-        coordsB = "data"
-        all_v = self.graph.get_all_v().keys()
-        for node in all_v:
-            vertex = self.graph.get_node(node)
-            x, y = uniform(0.0, 100), uniform(0.0, 100)
-            if vertex.get_pos():
-                x, y = vertex.get_pos()
+    def set_pos_for_all(self):
+        for node in self.graph.get_all_v().keys():
+            if self.graph.get_node(node).get_pos() is None:
+                self.graph.get_node(node).set_pos((uniform(0.0, 100), uniform(0.0, 100)))
             else:
-                vertex.set_pos((x, y))
-            xyA = (x, y)
-            for e in self.graph.all_out_edges_of_node(node).keys():
-                vertex_e = self.graph.get_node(e)
-                s.add(e)
-                s.add(node)
-                x1, y1 = uniform(0.0, 100), uniform(0.0, 100)
-                if vertex_e.get_pos():
-                    x1, y1 = vertex_e.get_pos()
-                else:
-                    vertex_e.set_pos((x1, y1))
-                xyB = (x1, y1)
-                con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
-                                      arrowstyle="<|-|>", shrinkA=5, shrinkB=5,
-                                      mutation_scale=13, fc="r")
+                break
+
+    def plot_graph(self) -> None:
+        fig, ax = plt.subplots()
+        self.init_algorithm_graph()
+        self.set_pos_for_all()
+        li_x, li_y, n = [], [], []
+        for node in self.graph.get_all_v().keys():
+            xyA = self.graph.get_node(node).get_pos()
+            x, y = self.graph.get_node(node).get_pos()
+            li_x.append(x)
+            li_y.append(y)
+            n.append(node)
+            for ni in self.graph.all_out_edges_of_node(node):
+                xyB = self.graph.get_node(ni).get_pos()
+                con = ConnectionPatch(xyA, xyB, "data", "data", arrowstyle="-|>", shrinkA=5, shrinkB=5,mutation_scale=13, fc="r")
                 ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
                 ax.add_artist(con)
-                xyB = 0
-        for node in all_v:
-            if node not in s:
-                x, y = uniform(0.0, 100), uniform(0.0, 100)
-                if vertex.get_pos():
-                    x, y = vertex.get_pos()
-                else:
-                    vertex.set_pos((x, y))
-                xyA = (x, y)
-                xyB = (x, y)
-                con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
-                                      arrowstyle="->", shrinkA=5, shrinkB=5,
-                                      mutation_scale=20, fc="w")
-                ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
-                ax.add_artist(con)
-        plt.xlabel("x coordinates")
-        plt.ylabel("y coordinates")
-        plt.title("My Graph")
+
+        ax.scatter(li_x, li_y)
+        for i, txt in enumerate(n):
+            ax.annotate(n[i], (li_x[i], li_y[i]))
         plt.show()
+
+    # def plot_graph(self) -> None:
+    #     """
+    #     Plots the graph.
+    #     If the nodes have a position, the nodes will be placed there.
+    #     Otherwise, they will be placed in a random but elegant manner.
+    #     @return: None
+    #     """
+    #     fig, ax = plt.subplots()
+    #     s = set()
+    #
+    #     coordsA = "data"
+    #     coordsB = "data"
+    #     all_v = self.graph.get_all_v().keys()
+    #     for node in all_v:
+    #         vertex = self.graph.get_node(node)
+    #         x, y = uniform(0.0, 100), uniform(0.0, 100)
+    #         if vertex.get_pos():
+    #             x, y = vertex.get_pos()
+    #         else:
+    #             vertex.set_pos((x, y))
+    #         xyA = (x, y)
+    #         for e in self.graph.all_out_edges_of_node(node).keys():
+    #             vertex_e = self.graph.get_node(e)
+    #             s.add(e)
+    #             s.add(node)
+    #             x1, y1 = uniform(0.0, 100), uniform(0.0, 100)
+    #             if vertex_e.get_pos():
+    #                 x1, y1 = vertex_e.get_pos()
+    #             else:
+    #                 vertex_e.set_pos((x1, y1))
+    #             xyB = (x1, y1)
+    #             con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
+    #                                   arrowstyle="<|-|>", shrinkA=5, shrinkB=5,
+    #                                   mutation_scale=13, fc="r")
+    #             ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
+    #             ax.add_artist(con)
+    #             xyB = 0
+    #     for node in all_v:
+    #         if node not in s:
+    #             x, y = uniform(0.0, 100), uniform(0.0, 100)
+    #             if vertex.get_pos():
+    #                 x, y = vertex.get_pos()
+    #             else:
+    #                 vertex.set_pos((x, y))
+    #             xyA = (x, y)
+    #             xyB = (x, y)
+    #             con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
+    #                                   arrowstyle="->", shrinkA=5, shrinkB=5,
+    #                                   mutation_scale=20, fc="w")
+    #             ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
+    #             ax.add_artist(con)
+    #     plt.xlabel("x coordinates")
+    #     plt.ylabel("y coordinates")
+    #     plt.title("My Graph")
+    #     plt.show()
 
     def __str__(self) -> str:
         return self.graph.__str__()
@@ -323,14 +309,18 @@ class GraphAlgo(GraphAlgoInterface):
 
 if __name__ == '__main__':
     g = GraphAlgo()
-    g.graph.add_node(1)
-    g.graph.add_node(2)
-    g.graph.add_node(3)
-    g.graph.add_node(4)
-
-    g.graph.add_edge(1, 2, 10)
-    g.graph.add_edge(1, 3, 10)
-    g.graph.add_edge(3, 1, 10)
-    g.graph.add_edge(3, 2, 10)
-    g.graph.add_edge(2, 1, 10)
+    for i in range(10):
+        g.graph.add_node(i)
+    for i in range(1, 10):
+        g.graph.add_edge(i - 1, i, i)
+        if i % 2 == 0:
+            g.graph.add_edge(i, i - 1, i)
+    g.graph.add_node(123)
     g.plot_graph()
+    # print(g)
+    # g.save_to_json("json_test.json")
+    # g.load_from_json("json_test.json")
+    g.load_from_json("../data/T0.json")
+    g.plot_graph()
+    g.save_to_json("json_test.json")
+    print(g)
