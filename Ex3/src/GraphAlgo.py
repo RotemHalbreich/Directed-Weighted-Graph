@@ -246,6 +246,10 @@ class GraphAlgo(GraphAlgoInterface):
         ax.scatter(li_x, li_y)
         for i, txt in enumerate(n):
             ax.annotate(n[i], (li_x[i], li_y[i]))
+        plt.xlabel("x coordinates")
+        plt.xlabel("x coordinates")
+        plt.ylabel("y coordinates")
+        plt.title("My Graph")
         plt.show()
 
     # def plot_graph(self) -> None:
@@ -315,6 +319,8 @@ class GraphAlgo(GraphAlgoInterface):
 if __name__ == '__main__':
     g = GraphAlgo()
     g.load_from_json("../data/G_10_80_0.json")
+    g.load_from_json("../data/A5")
+    print(g.connected_components())
     s_all=time.time()
     start = time.time()
     g.connected_components()
