@@ -144,10 +144,11 @@ class GraphAlgo(GraphAlgoInterface):
                 curr_node.set_tag(self.visited)
         return float('inf'), []
 
-    def connected_component(self, id1: int, refresh: int = 0) -> list:
+    def connected_component(self, id1: int, reset: int = 0) -> list:
         """
         Finds the Strongly Connected Component(SCC) that node id1 is a part of.
         @param id1: The node id
+        @param reset :
         @return: The list of nodes in the SCC
 
         Notes:
@@ -159,21 +160,16 @@ class GraphAlgo(GraphAlgoInterface):
         if self.graph.v_size() == 1:
             return [id1]
 
-        start = time.time()
-        if refresh ==0:
+        if reset == 0:
             self.init_algorithm_graph()
-        print(f"time from init algorithm{time.time() - start}")
-        start = time.time()
+
         reverse_graph, straight_list = self.sub_graph(id1)
-        print(f"time from sub graph{time.time() - start}")
+
         # straight_list = self.direction(id1, self.graph)
-        start = time.time()
+
         reverse_list = self.direction(id1, reverse_graph)
-        print(f"time from direction{time.time() - start}")
-        start=time.time()
-        ans=self.union(straight_list, reverse_list)
-        print(f"time from union{time.time() -start}")
-        return ans
+
+        return self.union(straight_list, reverse_list)
 
     def direction(self, id1: int, g: DiGraph) -> list:
         d = deque()
@@ -221,11 +217,13 @@ class GraphAlgo(GraphAlgoInterface):
 
         if self.graph is None:
             return []
-        scc, li = [], []
-        for i,node in enumerate(self.graph.get_all_v().keys()):
-            if node not in li:
-                connected = self.connected_component(node,i)
-                li.extend(connected)
+        scc = []
+        s = set()
+        for i, node in enumerate(self.graph.get_all_v().keys()):
+
+            if node not in s:
+                connected = self.connected_component(node, i)
+                s.update(connected)
                 scc.append(connected)
 
         return scc
@@ -264,62 +262,6 @@ class GraphAlgo(GraphAlgoInterface):
         plt.title("My Graph")
         plt.show()
 
-    # def plot_graph(self) -> None:
-    #     """
-    #     Plots the graph.
-    #     If the nodes have a position, the nodes will be placed there.
-    #     Otherwise, they will be placed in a random but elegant manner.
-    #     @return: None
-    #     """
-    #     fig, ax = plt.subplots()
-    #     s = set()
-    #
-    #     coordsA = "data"
-    #     coordsB = "data"
-    #     all_v = self.graph.get_all_v().keys()
-    #     for node in all_v:
-    #         vertex = self.graph.get_node(node)
-    #         x, y = uniform(0.0, 100), uniform(0.0, 100)
-    #         if vertex.get_pos():
-    #             x, y = vertex.get_pos()
-    #         else:
-    #             vertex.set_pos((x, y))
-    #         xyA = (x, y)
-    #         for e in self.graph.all_out_edges_of_node(node).keys():
-    #             vertex_e = self.graph.get_node(e)
-    #             s.add(e)
-    #             s.add(node)
-    #             x1, y1 = uniform(0.0, 100), uniform(0.0, 100)
-    #             if vertex_e.get_pos():
-    #                 x1, y1 = vertex_e.get_pos()
-    #             else:
-    #                 vertex_e.set_pos((x1, y1))
-    #             xyB = (x1, y1)
-    #             con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
-    #                                   arrowstyle="<|-|>", shrinkA=5, shrinkB=5,
-    #                                   mutation_scale=13, fc="r")
-    #             ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
-    #             ax.add_artist(con)
-    #             xyB = 0
-    #     for node in all_v:
-    #         if node not in s:
-    #             x, y = uniform(0.0, 100), uniform(0.0, 100)
-    #             if vertex.get_pos():
-    #                 x, y = vertex.get_pos()
-    #             else:
-    #                 vertex.set_pos((x, y))
-    #             xyA = (x, y)
-    #             xyB = (x, y)
-    #             con = ConnectionPatch(xyA, xyB, coordsA, coordsB,
-    #                                   arrowstyle="->", shrinkA=5, shrinkB=5,
-    #                                   mutation_scale=20, fc="w")
-    #             ax.plot([xyA[0], xyB[0]], [xyA[1], xyB[1]], "o")
-    #             ax.add_artist(con)
-    #     plt.xlabel("x coordinates")
-    #     plt.ylabel("y coordinates")
-    #     plt.title("My Graph")
-    #     plt.show()
-
     def __str__(self) -> str:
         return self.graph.__str__()
 
@@ -331,8 +273,6 @@ class GraphAlgo(GraphAlgoInterface):
 if __name__ == '__main__':
     g = GraphAlgo()
     g.load_from_json("../data/G_10_80_0.json")
-    g.load_from_json("../data/A5")
-    print(g.connected_components())
     s_all = time.time()
     start = time.time()
     g.connected_components()
