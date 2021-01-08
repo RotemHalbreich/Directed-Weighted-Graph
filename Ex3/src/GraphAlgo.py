@@ -1,6 +1,6 @@
 import json
 from random import uniform
-from typing import List
+from typing import List, Tuple
 from GraphAlgoInterface import GraphAlgoInterface
 from DiGraph import DiGraph
 from GraphInterface import GraphInterface
@@ -9,6 +9,7 @@ from collections import deque
 import matplotlib.pyplot as plt
 from matplotlib.patches import ConnectionPatch
 import time
+
 
 class GraphAlgo(GraphAlgoInterface):
     """This abstract class represents an interface of a graph."""
@@ -83,7 +84,6 @@ class GraphAlgo(GraphAlgoInterface):
         @return: True if the save was successful, False o.w.
 
         """
-
         try:
             with open(file_name, "w") as f:
                 json.dump(self.graph, default=self.encoder, indent=4, fp=f)
@@ -144,7 +144,7 @@ class GraphAlgo(GraphAlgoInterface):
                 curr_node.set_tag(self.visited)
         return float('inf'), []
 
-    def connected_component(self, id1: int) -> list:
+    def connected_component(self, id1: int, refresh: int = 0) -> list:
         """
         Finds the Strongly Connected Component(SCC) that node id1 is a part of.
         @param id1: The node id
@@ -158,12 +158,22 @@ class GraphAlgo(GraphAlgoInterface):
             return []
         if self.graph.v_size() == 1:
             return [id1]
-        self.init_algorithm_graph()
-        reverse_graph = self.sub_reverse_graph(id1)
-        straight_list = self.direction(id1, self.graph)
-        reverse_list = self.direction(id1, reverse_graph)
 
-        return self.union(straight_list, reverse_list)
+        start = time.time()
+        if refresh ==0:
+            self.init_algorithm_graph()
+        print(f"time from init algorithm{time.time() - start}")
+        start = time.time()
+        reverse_graph, straight_list = self.sub_graph(id1)
+        print(f"time from sub graph{time.time() - start}")
+        # straight_list = self.direction(id1, self.graph)
+        start = time.time()
+        reverse_list = self.direction(id1, reverse_graph)
+        print(f"time from direction{time.time() - start}")
+        start=time.time()
+        ans=self.union(straight_list, reverse_list)
+        print(f"time from union{time.time() -start}")
+        return ans
 
     def direction(self, id1: int, g: DiGraph) -> list:
         d = deque()
@@ -181,11 +191,12 @@ class GraphAlgo(GraphAlgoInterface):
     def union(self, straight: list, reverse: list) -> list:
         return list(set(straight) & set(reverse))
 
-    def sub_reverse_graph(self, id1: int) -> DiGraph:
+    def sub_graph(self, id1: int) -> Tuple[DiGraph, List]:
         d = deque()
         d.append(id1)
         reverse_graph = DiGraph()
         reverse_graph.add_node(id1)
+        li = [id1]
         while len(d) != 0:
             curr_node = d.popleft()
             for ni in self.graph.all_out_edges_of_node(curr_node).keys():
@@ -195,8 +206,9 @@ class GraphAlgo(GraphAlgoInterface):
                 if self.graph.get_node(ni).get_tag() is self.unvisited:
                     d.append(ni)
                     self.graph.get_node(ni).set_tag(self.visited)
-        self.init_algorithm_graph()
-        return reverse_graph
+                    li.append(ni)
+        # self.init_algorithm_graph()
+        return reverse_graph, li
 
     def connected_components(self) -> List[list]:
         """
@@ -210,9 +222,9 @@ class GraphAlgo(GraphAlgoInterface):
         if self.graph is None:
             return []
         scc, li = [], []
-        for node in self.graph.get_all_v().keys():
+        for i,node in enumerate(self.graph.get_all_v().keys()):
             if node not in li:
-                connected = self.connected_component(node)
+                connected = self.connected_component(node,i)
                 li.extend(connected)
                 scc.append(connected)
 
@@ -321,10 +333,10 @@ if __name__ == '__main__':
     g.load_from_json("../data/G_10_80_0.json")
     g.load_from_json("../data/A5")
     print(g.connected_components())
-    s_all=time.time()
+    s_all = time.time()
     start = time.time()
     g.connected_components()
-    print(f"component 10 take {time.time()-start} second")
+    print(f"component 10 take {time.time() - start} second")
     g.load_from_json("../data/G_100_800_0.json")
     start = time.time()
     g.connected_components()
