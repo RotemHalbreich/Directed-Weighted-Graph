@@ -10,38 +10,43 @@ class DiGraph(GraphInterface):
         self.graph = {}
 
     def increment(self, b) -> bool:
+        """
+        Increments the mode count while needed
+        @return: bool
+        """
         self.mc = self.mc + 1 if b else self.mc
         return b
 
     def v_size(self) -> int:
         """
         Returns the number of vertices in this graph
-        @return: The number of vertices in this graph
+        @return: int
         """
         return len(self.graph)
 
     def e_size(self) -> int:
         """
         Returns the number of edges in this graph
-        @return: The number of edges in this graph
+        @return: int
         """
         ans = 0
         for node in self.graph.values():
-            t=len(node.get_outside())
             ans += len(node.get_outside())
         return ans
 
     def get_all_v(self) -> dict:
         """
-        return a dictionary of all the nodes in the Graph, each node is represented using a pair
+        Returns a dictionary of all the vertices in the graph, each vertex is represented using a pair
         (node_id, node_data)
+        @return: dict
         """
         return self.graph
 
     def all_in_edges_of_node(self, id1: int) -> dict:
         """
-        return a dictionary of all the nodes connected to (into) node_id ,
+        Returns a dictionary of all the vertices connected into -> (node_id),
         each node is represented using a pair (other_node_id, weight)
+        @return: dict
         """
         if self.graph.get(id1):
             return self.graph[id1].get_inside()
@@ -49,7 +54,7 @@ class DiGraph(GraphInterface):
 
     def all_out_edges_of_node(self, id1: int) -> dict:
         """
-        return a dictionary of all the nodes connected from node_id , each node is represented using a pair
+        return a dictionary of all the vertices connected from node_id , each node is represented using a pair
         (other_node_id, weight)
         """
         if self.graph.get(id1):
@@ -59,8 +64,8 @@ class DiGraph(GraphInterface):
     def get_mc(self) -> int:
         """
         Returns the current version of this graph,
-        on every change in the graph state - the MC should be increased
-        @return: The current version of this graph.
+        for every change in the graph state - the MC should be increased
+        @return: int
         """
         return self.mc
 
