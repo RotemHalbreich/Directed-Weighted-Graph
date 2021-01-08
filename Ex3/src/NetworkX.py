@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import json
+import time
 
 
 class NetworkX:
@@ -83,12 +84,40 @@ class NetworkX:
             print(e)
             return False
 
-
+"""
+component 10 take 0.0 second
+component 100 take 0.0 second
+component 1000 take 0.015716075897216797 second
+component 10000 take 0.2187192440032959 second
+component 20000 take 0.5158131122589111 second
+component 30000 take 0.781378984451294 second
+all component take 2.9893922805786133 second
+"""
 if __name__ == '__main__':
     g = NetworkX()
-    g.load_from_json('../data/A5')
-    g.save_to_json('json_test.json')
-    g.load_from_json('json_test.json')
-    g.save_to_json('json_test.json')
-
-    print(g.connected_components())
+    g.load_from_json("../data/G_10_80_0.json")
+    s_all = time.time()
+    start = time.time()
+    g.connected_components()
+    print(f"component 10 take {time.time() - start} second")
+    g.load_from_json("../data/G_100_800_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 100 take {time.time() - start} second")
+    g.load_from_json("../data/G_1000_8000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 1000 take {time.time() - start} second")
+    g.load_from_json("../data/G_10000_80000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 10000 take {time.time() - start} second")
+    g.load_from_json("../data/G_20000_160000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 20000 take {time.time() - start} second")
+    g.load_from_json("../data/G_30000_240000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 30000 take {time.time() - start} second")
+    print(f"all component take {time.time() - s_all} second")

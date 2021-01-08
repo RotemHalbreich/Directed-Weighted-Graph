@@ -148,7 +148,7 @@ class GraphAlgo(GraphAlgoInterface):
         """
         Finds the Strongly Connected Component(SCC) that node id1 is a part of.
         @param id1: The node id
-        @param reset :
+        @param reset:
         @return: The list of nodes in the SCC
 
         Notes:
@@ -214,7 +214,6 @@ class GraphAlgo(GraphAlgoInterface):
         Notes:
         If the graph is None the function should return an empty list []
         """
-
         if self.graph is None:
             return []
         scc = []
