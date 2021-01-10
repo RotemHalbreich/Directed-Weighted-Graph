@@ -245,7 +245,6 @@ class GraphAlgo(GraphAlgoInterface):
         scc = []
         s = set()
         for i, node in enumerate(self.graph.get_all_v().keys()):
-
             if node not in s:
                 connected = self.connected_component(node, i)
                 s.update(connected)
