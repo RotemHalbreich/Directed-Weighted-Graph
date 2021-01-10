@@ -67,6 +67,7 @@ class NetworkX:
     def connected_components(self):
         b = nx.strongly_connected_components(self.graph)
         c = []
+
         for i in b:
             c.append(i)
         return c

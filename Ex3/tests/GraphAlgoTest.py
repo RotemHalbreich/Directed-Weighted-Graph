@@ -28,10 +28,33 @@ class TestGraphAlgo(TestCase):
         self.assertEqual(self.complex_graph, graph)
 
     def test_save_to_json_and_load_from_json(self):
-        # g = GraphAlgo(self.complex_graph)
-        self.complex_graph.save_to_json("../data/text.json")
-        g = GraphAlgo()
-        g.load_from_json("../data/text.json")
+        self.complex_graph.load_from_json("../data/G_10_80_0.json")
+        self.complex_graph.save_to_json('json_test.json')
+        copy = GraphAlgo()
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
+        self.complex_graph.load_from_json("../data/G_1000_8000_0.json")
+        self.complex_graph.save_to_json('json_test.json')
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
+        self.complex_graph.load_from_json("../data/G_100_800_0.json")
+        self.complex_graph.save_to_json('json_test.json')
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
+        self.complex_graph.load_from_json("../data/G_10000_80000_0.json")
+        self.complex_graph.save_to_json('json_test.json')
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
+        self.complex_graph.load_from_json("../data/G_20000_160000_0.json")
+        self.complex_graph.save_to_json('json_test.json')
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
+        self.complex_graph.load_from_json("../data/G_30000_240000_0.json")
+        self.complex_graph.save_to_json('json_test.json')
+        copy.load_from_json('json_test.json')
+        self.assertEqual(self.complex_graph, copy)
 
     def test_shortest_path(self):
         pass
@@ -40,9 +63,6 @@ class TestGraphAlgo(TestCase):
         pass
 
     def test_connected_components(self):
-        pass
-
-    def test_plot_graph(self):
         pass
 
 
