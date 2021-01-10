@@ -266,51 +266,43 @@ class GraphAlgo(GraphAlgoInterface):
 
     def __repr__(self) -> str:
         return self.graph.__str__()
-    def __eq__(self, other):
-        if isinstance(other,GraphAlgo):
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, GraphAlgo):
             return self.graph.__eq__(other.graph)
-        elif isinstance(other,GraphInterface):
+        elif isinstance(other, GraphInterface):
             return self.graph.__eq__(other)
+        return False
+
 
 if __name__ == '__main__':
     g = GraphAlgo()
-    g1 = GraphAlgo()
-    g.get_graph().add_node(1)
-    g1.get_graph().add_node(1)
-    gg=DiGraph()
-    gg.add_node(1)
-    print(g==gg)
+    s_all = time.time()
     g.load_from_json("../data/G_10_80_0.json")
-    g1.load_from_json("../data/G_10_80_0.json")
-
-    print(g==g1)
-    print(g.connected_component(0))
-
-    # s_all = time.time()
-    # start = time.time()
-    # g.connected_components()
-    # print(f"component 10 take {time.time() - start} second")
-    # g.load_from_json("../data/G_100_800_0.json")
-    # start = time.time()
-    # g.connected_components()
-    # print(f"component 100 take {time.time() - start} second")
-    # g.load_from_json("../data/G_1000_8000_0.json")
-    # start = time.time()
-    # g.connected_components()
-    # print(f"component 1000 take {time.time() - start} second")
-    # g.load_from_json("../data/G_10000_80000_0.json")
-    # start = time.time()
-    # g.connected_components()
-    # print(f"component 10000 take {time.time() - start} second")
-    # g.load_from_json("../data/G_20000_160000_0.json")
-    # start = time.time()
-    # g.connected_components()
-    # print(f"component 20000 take {time.time() - start} second")
-    # g.load_from_json("../data/G_30000_240000_0.json")
-    # start = time.time()
-    # g.connected_components()
-    # print(f"component 30000 take {time.time() - start} second")
-    # print(f"all component take {time.time() - s_all} second")
+    start = time.time()
+    g.connected_components()
+    print(f"component 10 take {time.time() - start} second")
+    g.load_from_json("../data/G_100_800_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 100 take {time.time() - start} second")
+    g.load_from_json("../data/G_1000_8000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 1000 take {time.time() - start} second")
+    g.load_from_json("../data/G_10000_80000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 10000 take {time.time() - start} second")
+    g.load_from_json("../data/G_20000_160000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 20000 take {time.time() - start} second")
+    g.load_from_json("../data/G_30000_240000_0.json")
+    start = time.time()
+    g.connected_components()
+    print(f"component 30000 take {time.time() - start} second")
+    print(f"all component take {time.time() - s_all} second")
     # g.graph.add_node(123)
     # g.save_to_json("json_test.json")
     # g.load_from_json("json_test.json")

@@ -64,10 +64,6 @@ class NetworkX:
     def shortest_path(self, src: int, dest: int):
         return nx.shortest_path(self.graph, src, dest, weight='weight')
 
-    def draw_graph(self):
-        nx.draw_networkx(self.graph, nx.get_node_attributes(self.graph, 'pos'), arrows=True, with_labels=True)
-        plt.show()
-
     def connected_components(self):
         b = nx.strongly_connected_components(self.graph)
         c = []
@@ -118,6 +114,7 @@ if __name__ == '__main__':
     print(f"component 20000 take {time.time() - start} second")
     g.load_from_json("../data/G_30000_240000_0.json")
     start = time.time()
+
     g.connected_components()
     print(f"component 30000 take {time.time() - start} second")
     print(f"all component take {time.time() - s_all} second")

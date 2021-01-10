@@ -25,7 +25,7 @@ class TestGraphAlgo(TestCase):
         graph.add_edge(1, 0, 1)
         graph.add_edge(3, 1, 1)
         graph.add_edge(5, 3, 1)
-        self.assertEqual(self.complex_graph,graph)
+        self.assertEqual(self.complex_graph, graph)
 
     def test_save_to_json_and_load_from_json(self):
         # g = GraphAlgo(self.complex_graph)

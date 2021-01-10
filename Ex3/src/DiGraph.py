@@ -168,10 +168,12 @@ class DiGraph(GraphInterface):
         return True
 
     def __eq__(self, other):
-        if isinstance(other,GraphInterface):
+        if isinstance(other, GraphInterface):
             return self.similar(self, other) and self.similar(other, self)
-        elif isinstance(other,GraphAlgoInterface):
+        elif isinstance(other, GraphAlgoInterface):
             return self.similar(self, other.get_graph()) and self.similar(other.get_graph(), self)
+        return False
+
 
 if __name__ == '__main__':
     g = DiGraph()
@@ -182,7 +184,7 @@ if __name__ == '__main__':
 
     print(g == g1)
     g.add_edge(1, 2, 10)
-
+    print(g == g1)
     g.add_edge(1, 1, 10)
     g.add_edge(2, 2, 10)
     g.add_edge(1, 3, 10)
