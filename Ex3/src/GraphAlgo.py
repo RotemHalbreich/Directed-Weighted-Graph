@@ -29,6 +29,10 @@ class GraphAlgo(GraphAlgoInterface):
         return self.graph
 
     def init_json(self, new_graph: dict) -> None:
+        """
+        Initializes a new graph from Json format.
+        @param: dict - a new graph
+        """
         nodes = new_graph.get("Nodes")
         edges = new_graph.get("Edges")
         for node in nodes:
@@ -43,6 +47,10 @@ class GraphAlgo(GraphAlgoInterface):
             self.graph.add_edge(id1=s, id2=d, weight=w)
 
     def init_my_graph_from_json(self, new_graph) -> None:
+        """
+        Initializes our graph from Json file.
+        @return: None
+        """
         g = new_graph.get("graph")
         for k, v in g.items():
             x, y = uniform(0.0, 100), uniform(0.0, 100)
@@ -75,6 +83,9 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def encoder(self, o):
+        """
+        Returns a dictionary
+        """
         return o.as_dict()
 
     def save_to_json(self, file_name: str) -> bool:
@@ -82,7 +93,6 @@ class GraphAlgo(GraphAlgoInterface):
         Saves the graph in JSON format to a file
         @param file_name: The path to the out file
         @return: True if the save was successful, False o.w.
-
         """
         try:
             with open(file_name, "w") as f:
@@ -92,12 +102,22 @@ class GraphAlgo(GraphAlgoInterface):
         return True
 
     def init_algorithm_graph(self):
+        """
+        Initializes the GraphAlgo
+        """
         for i in self.graph.get_all_v():
             node = self.graph.get_node(i)
             node.set_value(float('inf'))
             node.set_tag(self.unvisited)
 
     def seek_path(self, id1: int, id2: int, value=float) -> (float, list):
+        """
+        Returns the shortest path distance (as weight) and its route of vertices as a list
+        @param: int - id1
+        @param: int - id2
+        @param: float - value
+        @return: (float, list)
+        """
         prev = self.graph.get_node(id2)
         path = [prev.get_key()]
 
@@ -112,11 +132,8 @@ class GraphAlgo(GraphAlgoInterface):
         Returns the shortest path from node id1 to node id2 using Dijkstra's Algorithm
         @param id1: The start node id
         @param id2: The end node id
-        @return: The distance of the path, a list of the nodes ids that the path goes through
-        Notes:
-        If there is no path between id1 and id2, or one of them dose not exist the function returns (float('inf'),[])
-        More info:
-        https://en.wikipedia.org/wiki/Dijkstra's_algorithm
+        @return: The distance of the path, a list of the vertices IDs which the path goes through
+                 If no such path, or one of them doesn't exist the function returns (float('inf'),[])
         """
         if self.graph.get_node(id1) is None or self.graph.get_node(id2) is None:
             return float('inf'), []
@@ -146,32 +163,33 @@ class GraphAlgo(GraphAlgoInterface):
 
     def connected_component(self, id1: int, reset: int = 0) -> list:
         """
-        Finds the Strongly Connected Component(SCC) that node id1 is a part of.
-        @param id1: The node id
-        @param reset:
+        Finds the Strongly Connected Component (SCC) which node id1 is a part of.
+        @param id1: The vertex id
+        @param reset: int
         @return: The list of nodes in the SCC
-
-        Notes:
-        If the graph is None or id1 is not in the graph, the function should return an empty list []
+                 If the graph is None or id1 is not in the graph, the function returns an empty list []
         """
 
         if self.graph.get_node(id1) is None:
             return []
         if self.graph.v_size() == 1:
             return [id1]
-
         if reset == 0:
             self.init_algorithm_graph()
 
         reverse_graph, straight_list = self.sub_graph(id1)
-
         # straight_list = self.direction(id1, self.graph)
-
         reverse_list = self.direction(id1, reverse_graph)
 
         return self.union(straight_list, reverse_list)
 
     def direction(self, id1: int, g: DiGraph) -> list:
+        """
+        Returns the list of the neighbors of a vertex
+        @param: int: id1
+        @param: DiGraph - a graph
+        @return: list
+        """
         d = deque()
         d.append(id1)
         li = [id1]
@@ -185,9 +203,18 @@ class GraphAlgo(GraphAlgoInterface):
         return li
 
     def union(self, straight: list, reverse: list) -> list:
+        """
+        Returns a union of both lists straight & reverse as another list
+        @return: list
+        """
         return list(set(straight) & set(reverse))
 
     def sub_graph(self, id1: int) -> Tuple[DiGraph, List]:
+        """
+        Returns the graph reverse and the list of neighbors which you can get to from a vertex
+        @param: int - id1
+        @return: Tuple[DiGraph, List]
+        """
         d = deque()
         d.append(id1)
         reverse_graph = DiGraph()
@@ -203,16 +230,14 @@ class GraphAlgo(GraphAlgoInterface):
                     d.append(ni)
                     self.graph.get_node(ni).set_tag(self.visited)
                     li.append(ni)
-        # self.init_algorithm_graph()
+
         return reverse_graph, li
 
     def connected_components(self) -> List[list]:
         """
-        Finds all the Strongly Connected Component(SCC) in the graph.
-        @return: The list all SCC
-
-        Notes:
-        If the graph is None the function should return an empty list []
+        Finds all the Strongly Connected Components (SCC) in the graph.
+        @return: The list of all SCC
+                 If the graph is None, the function returns an empty list []
         """
         if self.graph is None:
             return []
@@ -228,6 +253,9 @@ class GraphAlgo(GraphAlgoInterface):
         return scc
 
     def set_pos_for_all(self):
+        """
+        Sets the position for every vertex in the graph randomly
+        """
         for node in self.graph.get_all_v().keys():
             if self.graph.get_node(node).get_pos() is None:
                 self.graph.get_node(node).set_pos((uniform(0.0, 100), uniform(0.0, 100)))
@@ -235,6 +263,12 @@ class GraphAlgo(GraphAlgoInterface):
                 break
 
     def plot_graph(self) -> None:
+        """
+        Plots the graph.
+        If the vertices have a position, the vertices will be placed there.
+        Otherwise, they will be placed in a random but elegant manner.
+        @return: None
+        """
         fig, ax = plt.subplots()
         self.init_algorithm_graph()
         self.set_pos_for_all()
@@ -262,12 +296,22 @@ class GraphAlgo(GraphAlgoInterface):
         plt.show()
 
     def __str__(self) -> str:
+        """
+        @return: Returns the graph as a String.
+        """
         return self.graph.__str__()
 
     def __repr__(self) -> str:
+        """
+        @return: Returns the graph as a String.
+        """
         return self.graph.__str__()
 
     def __eq__(self, other) -> bool:
+        """
+        Checks if two GraphAlgo are equals.
+        @return: bool
+        """
         if isinstance(other, GraphAlgo):
             return self.graph.__eq__(other.graph)
         elif isinstance(other, GraphInterface):
