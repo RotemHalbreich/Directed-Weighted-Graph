@@ -93,7 +93,7 @@ class DiGraphTest(unittest.TestCase):
 
     def test_remove_node(self):
         g = DiGraph()
-      # self.assertEqual(g, {})
+        self.assertEqual(g.v_size(), 0)
         for i in range(5):
             g.add_node(i)
         g.remove_node(0)
@@ -101,7 +101,7 @@ class DiGraphTest(unittest.TestCase):
         g.add_edge(1, 2, 15)
         self.assertEqual(g.e_size(), 1)
         g.remove_node(1)
-        self.assertTrue(g.e_size(), 0)
+        self.assertEqual(g.e_size(), 0)
 
     def test_add_edge(self):
         g = DiGraph()
@@ -109,8 +109,8 @@ class DiGraphTest(unittest.TestCase):
         for i in range(1, 10):
             g.add_node(i)
             g.add_edge(0, i, i * 2.0)
-        self.assertEqual(g.all_out_edges_of_node(0), 9)
-        self.assertEqual(g.all_in_edges_of_node(0), None)
+        self.assertEqual(len(g.all_out_edges_of_node(0)), 9)
+        self.assertEqual(g.all_in_edges_of_node(0), {})
 
     def test_remove_edge(self):
         g = DiGraph()
