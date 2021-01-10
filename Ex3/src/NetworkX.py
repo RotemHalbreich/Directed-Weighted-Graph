@@ -64,6 +64,8 @@ class NetworkX:
     def shortest_path(self, src: int, dest: int):
         return nx.shortest_path(self.graph, src, dest, weight='weight')
 
+    def shortest_path_dist(self, src: int, dest: int):
+        return nx.shortest_path_length(self.graph, src, dest, weight='weight')
     def connected_components(self):
         b = nx.strongly_connected_components(self.graph)
         c = []
@@ -81,46 +83,70 @@ class NetworkX:
             print(e)
             return False
 
-"""
-component 10 take 0.0 second
-component 100 take 0.0 second
-component 1000 take 0.015716075897216797 second
-component 10000 take 0.2187192440032959 second
-component 20000 take 0.5158131122589111 second
-component 30000 take 0.781378984451294 second
-all component take 2.9893922805786133 second
-"""
 if __name__ == '__main__':
+    print()
     g = NetworkX()
+    print("####### NetworkX #######")
+    print()
     g.load_from_json("../data/G_10_80_0.json")
     s_all = time.time()
     start = time.time()
-    g.connected_components()
-    print(f"component 10 take {time.time() - start} second")
+    print("NetworkX: \nGraph G_10_80_0 coordinates: (0,8)")
+    print(f"Connected components {len(g.connected_components())} runtime {time.time()-start}")
+    start = time.time()
+    print("Shortest path route: ",g.shortest_path(0, 8))
+    print("Shortest path distance: ",g.shortest_path_dist(0, 8))
+    print(f"Shortest path runtime {time.time() - start} seconds")
+    print()
+
     g.load_from_json("../data/G_100_800_0.json")
     start = time.time()
-    g.connected_components()
-    print(f"component 100 take {time.time() - start} second")
+    print("NetworkX: \nGraph G_100_800_0 coordinates: (12,95)")
+    print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
+    start = time.time()
+    print("Shortest path route: ", g.shortest_path(12, 95))
+    print("Shortest path distance: ", g.shortest_path_dist(12, 95))
+    print(f"Shortest path runtime {time.time() - start} seconds")
+    print()
+
     g.load_from_json("../data/G_1000_8000_0.json")
     start = time.time()
-    print(g.shortest_path(10, 850),"sss")
-    g.connected_components()
-    print(f"component 1000 take {time.time() - start} second")
+    print("NetworkX: \nGraph G_1000_8000_0 coordinates: (10,850)")
+    print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
+    start = time.time()
+    print("Shortest path route: ", g.shortest_path(10,850))
+    print("Shortest path distance: ", g.shortest_path_dist(10,850))
+    print(f"Shortest path runtime {time.time() - start} seconds")
+    print()
+
     g.load_from_json("../data/G_10000_80000_0.json")
     start = time.time()
-    g.connected_components()
-    print(f"component 10000 take {time.time() - start} second")
+    print("NetworkX: \nGraph G_10000_80000_0 coordinates: (0,9999)")
+    print(f"Connected components {len(g.connected_components())} runtime {time.time()-start}")
+    start = time.time()
+    print("Shortest path route: ", g.shortest_path(0,9999))
+    print("Shortest path distance: ", g.shortest_path_dist(0,9999))
+    print(f"Shortest path runtime {time.time() - start} seconds")
+    print()
+
     g.load_from_json("../data/G_20000_160000_0.json")
     start = time.time()
-    g.connected_components()
-    print(f"component 20000 take {time.time() - start} second")
+    print("NetworkX: \nGraph G_20000_160000_0 coordinates: (0, 19999)")
+    print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
+    start = time.time()
+    print("Shortest path route: ", g.shortest_path(0, 19999))
+    print("Shortest path distance: ", g.shortest_path_dist(0, 19999))
+    print(f"Shortest path runtime {time.time() - start} seconds")
+    print()
+
     g.load_from_json("../data/G_30000_240000_0.json")
     start = time.time()
-
-    g.connected_components()
-    g.shortest_path(0,10)
-    print(f"component 30000 take {time.time() - start} second")
-    print(f"all component take {time.time() - s_all} second")
+    print("NetworkX: \nGraph G_30000_240000_0 coordinates: (0, 5000)")
+    print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
-    print(g.shortest_path(2,3))
-    print(f"shortest path 30000 from 0 to 10 {time.time() - start} second")
+    print("Shortest path route: ", g.shortest_path(0, 5000))
+    print("Shortest path distance: ", g.shortest_path_dist(0, 5000))
+    print(f"Shortest path runtime {time.time() - start} seconds")
+    print()
+    print(f"Total time: {time.time() - s_all} seconds")
+    print()
