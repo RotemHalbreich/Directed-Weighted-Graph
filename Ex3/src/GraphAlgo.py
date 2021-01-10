@@ -43,7 +43,6 @@ class GraphAlgo(GraphAlgoInterface):
                 x, y = float(tmp[0]), float(tmp[1])
             self.graph.add_node(node_id=k, pos=(x, y))
         for edge in edges:
-
             self.graph.add_edge(id1=edge.get("src"), id2=edge.get("dest"), weight=edge.get("w"))
 
     def init_my_graph_from_json(self, new_graph) -> None:
@@ -157,7 +156,7 @@ class GraphAlgo(GraphAlgoInterface):
                 if ni.get_tag() is self.unvisited and ni.get_value() > weight:
                     ni.set_value(weight)
                     queue.put(ni)
-                    #sorted(queue.queue)
+                    # sorted(queue.queue)
                     ni.set_prev(curr_node)
             curr_node.set_tag(self.visited)
         return float('inf'), []
@@ -334,6 +333,8 @@ if __name__ == '__main__':
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 8))
     print(f"Shortest path runtime {time.time() - start} seconds")
+    start = time.time()
+    print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
     g.load_from_json("../data/G_100_800_0.json")
@@ -343,6 +344,8 @@ if __name__ == '__main__':
     start = time.time()
     print("Shortest path: ", g.shortest_path(12, 95))
     print(f"Shortest path runtime {time.time() - start} seconds")
+    start = time.time()
+    print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
     g.load_from_json("../data/G_1000_8000_0.json")
@@ -352,6 +355,8 @@ if __name__ == '__main__':
     start = time.time()
     print("Shortest path: ", g.shortest_path(10, 850))
     print(f"Shortest path runtime {time.time() - start} seconds")
+    start = time.time()
+    print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
     g.load_from_json("../data/G_10000_80000_0.json")
@@ -361,6 +366,8 @@ if __name__ == '__main__':
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 9999))
     print(f"Shortest path runtime {time.time() - start} seconds")
+    start = time.time()
+    print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
     g.load_from_json("../data/G_20000_160000_0.json")
@@ -370,6 +377,8 @@ if __name__ == '__main__':
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 19999))
     print(f"Shortest path runtime {time.time() - start} seconds")
+    start = time.time()
+    print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
     g.load_from_json("../data/G_30000_240000_0.json")
@@ -379,6 +388,8 @@ if __name__ == '__main__':
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 5000))
     print(f"Shortest path runtime {time.time() - start} seconds")
-    print("<----------------------------------------------------------------------->")
-    print(f"Our Python implementation: Total time {time.time() - s_all} seconds")
+    start = time.time()
+    print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print()
+    print(f"Our Python implementation: Total time {time.time() - s_all} seconds")
+    print("<----------------------------------------------------------------------->")

@@ -145,12 +145,24 @@ class DiGraph(GraphInterface):
         return self.graph.get(node_id)
 
     def __str__(self) -> str:
+        """
+        Returns the graph as a string.
+        @return str
+        """
         return self.graph.__str__()
 
     def __repr__(self) -> str:
+        """
+        Returns the graph as a string.
+        @return str
+        """
         return self.graph.__str__()
 
     def as_dict(self) -> dict:
+        """
+        Returns as a dictionary.
+        @return dict
+        """
         tmp_dict = self.__dict__
 
         try:
@@ -160,6 +172,9 @@ class DiGraph(GraphInterface):
         return tmp_dict
 
     def similar(self, g, g1):
+        """
+        Checks if two graphs are similar.
+        """
         for n in g.get_all_v():
             if n not in g1.get_all_v():
                 return False
@@ -168,6 +183,9 @@ class DiGraph(GraphInterface):
         return True
 
     def __eq__(self, other):
+        """
+        Checks if two graphs are equal.
+        """
         if isinstance(other, GraphInterface):
             return self.similar(self, other) and self.similar(other, self)
         elif isinstance(other, GraphAlgoInterface):
