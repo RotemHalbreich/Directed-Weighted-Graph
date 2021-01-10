@@ -157,14 +157,28 @@ class DiGraph(GraphInterface):
             print(e)
         return tmp_dict
 
+    def similar(self, g, g1):
+        for n in g.get_all_v():
+            if n not in g1.get_all_v():
+                return False
+            if g.get_node(n) != g1.get_node(n):
+                return False
+        return True
 
+    def __eq__(self, other):
+        return self.similar(self, other) and self.similar(other, self)
 
 
 if __name__ == '__main__':
     g = DiGraph()
+    g1 = DiGraph()
     for i in range(6):
         g.add_node(i)
+        g1.add_node(i)
+
+    print(g == g1)
     g.add_edge(1, 2, 10)
+
     g.add_edge(1, 1, 10)
     g.add_edge(2, 2, 10)
     g.add_edge(1, 3, 10)
@@ -189,4 +203,3 @@ if __name__ == '__main__':
     print(g.all_out_edges_of_node(4))
     print(g.all_in_edges_of_node(3))
     print(g.get_all_v())
-

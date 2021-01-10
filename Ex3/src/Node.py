@@ -70,10 +70,12 @@ class Node:
     def get_prev(self):
         return self.prev
 
-    def get_pos(self)->tuple:
+    def get_pos(self) -> tuple:
         return self.pos
-    def set_pos(self,p:tuple)->None:
-        self.pos=p
+
+    def set_pos(self, p: tuple) -> None:
+        self.pos = p
+
     def __str__(self) -> str:
         return f"key:{self.key},inside:{self.get_inside()},outside:{self.get_outside()}"
 
@@ -87,18 +89,27 @@ class Node:
         return self.value < other.value
 
     def as_dict(self) -> dict:
-        tmp_dict= self.__dict__
+        tmp_dict = self.__dict__
         return tmp_dict
 
-    # todo make equals function
+    def __eq__(self, other):
+        return self.key == other.key \
+               and self.get_inside() == other.get_inside() \
+               and self.get_outside() == other.get_outside()
 
 
 if __name__ == '__main__':
-    n = Node(1)
+    n = Node(1, pos=(2, 3))
+    n1 = Node(1, pos=(2, 3))
+
     print(n.add_outside(2, 2.5))
     print(n.add_outside(22, 2.5))
     print(n.add_inside(22, 2.52))
+    print(n1.add_outside(2, 2.5))
+    print(n1.add_outside(22, 2.5))
+    print(n1.add_inside(22, 2.52))
     print(n)
+    print(n == n1, "ll")
     print(len(n.outside))
     print(n.remove_inside(22))
     print(n.remove_inside(22))
