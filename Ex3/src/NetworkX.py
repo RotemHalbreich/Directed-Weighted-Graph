@@ -103,6 +103,7 @@ if __name__ == '__main__':
     print(f"component 100 take {time.time() - start} second")
     g.load_from_json("../data/G_1000_8000_0.json")
     start = time.time()
+    print(g.shortest_path(10, 850),"sss")
     g.connected_components()
     print(f"component 1000 take {time.time() - start} second")
     g.load_from_json("../data/G_10000_80000_0.json")
@@ -117,5 +118,9 @@ if __name__ == '__main__':
     start = time.time()
 
     g.connected_components()
+    g.shortest_path(0,10)
     print(f"component 30000 take {time.time() - start} second")
     print(f"all component take {time.time() - s_all} second")
+    start = time.time()
+    print(g.shortest_path(2,3))
+    print(f"shortest path 30000 from 0 to 10 {time.time() - start} second")

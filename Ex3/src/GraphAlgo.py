@@ -43,8 +43,8 @@ class GraphAlgo(GraphAlgoInterface):
                 x, y = float(tmp[0]), float(tmp[1])
             self.graph.add_node(node_id=k, pos=(x, y))
         for edge in edges:
-            s, w, d = edge.get("src"), edge.get("w"), edge.get("dest")
-            self.graph.add_edge(id1=s, id2=d, weight=w)
+
+            self.graph.add_edge(id1=edge.get("src"), id2=edge.get("dest"), weight=edge.get("w"))
 
     def init_my_graph_from_json(self, new_graph) -> None:
         """
@@ -109,6 +109,7 @@ class GraphAlgo(GraphAlgoInterface):
             node = self.graph.get_node(i)
             node.set_value(float('inf'))
             node.set_tag(self.unvisited)
+            node.set_prev(None)
 
     def seek_path(self, id1: int, id2: int, value=float) -> (float, list):
         """
@@ -146,7 +147,7 @@ class GraphAlgo(GraphAlgoInterface):
         queue.put(self.graph.get_node(id1))
         while not queue.empty():
             curr_node = queue.get(0)
-            if curr_node.get_key() is id2 or curr_node.get_value() is float('inf'):
+            if curr_node.get_key() == id2 or curr_node.get_value() == float('inf'):
                 if curr_node.get_value is float('inf'):
                     return float('inf'), []
                 return self.seek_path(id1, id2, curr_node.get_value())
@@ -156,9 +157,9 @@ class GraphAlgo(GraphAlgoInterface):
                 if ni.get_tag() is self.unvisited and ni.get_value() > weight:
                     ni.set_value(weight)
                     queue.put(ni)
-                    sorted(queue.queue)
+                    # sorted(queue.queue)
                     ni.set_prev(curr_node)
-                curr_node.set_tag(self.visited)
+            curr_node.set_tag(self.visited)
         return float('inf'), []
 
     def connected_component(self, id1: int, reset: int = 0) -> list:
@@ -322,33 +323,46 @@ class GraphAlgo(GraphAlgoInterface):
 if __name__ == '__main__':
     g = GraphAlgo()
     s_all = time.time()
+
     g.load_from_json("../data/G_10_80_0.json")
     start = time.time()
-    print(g.connected_component(0))
+    print(g.shortest_path(0, 8))
     print(f"component 10 take {time.time() - start} second")
-
-    g.load_from_json("../data/G_100_800_0.json")
     start = time.time()
-    print( g.connected_component(10))
+    # print(g.connected_component(0))
+    # print(f"component 10 take {time.time() - start} second")
+    #
+    g.load_from_json("../data/G_100_800_0.json")
 
+    # print( g.connected_component(10))
+    print(g.shortest_path(12,95))
     print(f"component 100 take {time.time() - start} second")
     g.load_from_json("../data/G_1000_8000_0.json")
     start = time.time()
-    print(g.connected_components())
+    # print(g.connected_components())
+
+    print(g.shortest_path(10, 850))
     print(f"component 1000 take {time.time() - start} second")
     g.load_from_json("../data/G_10000_80000_0.json")
     start = time.time()
-    print(g.connected_components())
+    print(g.shortest_path(0, 9999))
+    # print(g.connected_components())
     print(f"component 10000 take {time.time() - start} second")
     g.load_from_json("../data/G_20000_160000_0.json")
     start = time.time()
-    g.connected_components()
-    print(f"component 20000 take {time.time() - start} second")
+    print(g.shortest_path(0, 19999))
+    # g.connected_components()
+    # print(f"component 20000 take {time.time() - start} second")
     g.load_from_json("../data/G_30000_240000_0.json")
     start = time.time()
-    g.connected_components()
+    print(g.shortest_path(1000, 10000))
+    # g.connected_components()
     print(f"component 30000 take {time.time() - start} second")
-    print(f"all component take {time.time() - s_all} second")
+    # print(f"all component take {time.time() - s_all} second")
+
+
+    print(f" sum of tests {(time.time() - s_all)} second")
+
     # g.graph.add_node(123)
     # g.save_to_json("json_test.json")
     # g.load_from_json("json_test.json")
