@@ -267,15 +267,19 @@ class GraphAlgo(GraphAlgoInterface):
     def __repr__(self) -> str:
         return self.graph.__str__()
     def __eq__(self, other):
-        return self.graph.__eq__(other.graph)
-
+        if isinstance(other,GraphAlgo):
+            return self.graph.__eq__(other.graph)
+        elif isinstance(other,GraphInterface):
+            return self.graph.__eq__(other)
 
 if __name__ == '__main__':
     g = GraphAlgo()
     g1 = GraphAlgo()
     g.get_graph().add_node(1)
     g1.get_graph().add_node(1)
-
+    gg=DiGraph()
+    gg.add_node(1)
+    print(g==gg)
     g.load_from_json("../data/G_10_80_0.json")
     g1.load_from_json("../data/G_10_80_0.json")
 

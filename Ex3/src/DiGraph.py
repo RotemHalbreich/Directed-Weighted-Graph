@@ -1,3 +1,5 @@
+from GraphAlgoInterface import GraphAlgoInterface
+
 from Node import Node
 from GraphInterface import GraphInterface
 
@@ -166,8 +168,10 @@ class DiGraph(GraphInterface):
         return True
 
     def __eq__(self, other):
-        return self.similar(self, other) and self.similar(other, self)
-
+        if isinstance(other,GraphInterface):
+            return self.similar(self, other) and self.similar(other, self)
+        elif isinstance(other,GraphAlgoInterface):
+            return self.similar(self, other.get_graph()) and self.similar(other.get_graph(), self)
 
 if __name__ == '__main__':
     g = DiGraph()
