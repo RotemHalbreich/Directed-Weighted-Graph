@@ -4,9 +4,9 @@
 ----------------------------------------------------------------------------------------------------------
 ## :bar_chart: *Based on "Graph Theory" subject, dealing with directed weighted graph*
 ### *Implementation of the following classes:*
-- *[Node()](https://github.com/RotemHalbreich/Ex3/wiki/Node-Class) - represents the vertices of the graph*
-- *[DiGraph()](https://github.com/RotemHalbreich/Ex3/wiki/DiGraph-Class) - represents a directed weighted graph*
-- *[GraphAlgo()](https://github.com/RotemHalbreich/Ex3/wiki/GraphAlgo-Class) - represents the directed weighted graph's algorithms*
+- *[Node()](https://github.com/shakedaviad55/Ex3/wiki/Node-Class) - represents the vertices of the graph*
+- *[DiGraph()](https://github.com/shakedaviad55/Ex3/wiki/DiGraph-Class) - represents a directed weighted graph*
+- *[GraphAlgo()](https://github.com/shakedaviad55/Ex3/wiki/GraphAlgo-Class) - represents the directed weighted graph's algorithms*
 
 ----------------------------------------------------------------------------------------------------------
 ### :question: *The purpose of the project:*
