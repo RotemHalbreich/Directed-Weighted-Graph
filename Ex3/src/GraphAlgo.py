@@ -12,7 +12,7 @@ import time
 
 
 class GraphAlgo(GraphAlgoInterface):
-    """This abstract class represents an interface of a graph."""
+    """This class represents the directed weighted graph's algorithms"""
 
     visited, unvisited, finish = 1, -1, 0
 
@@ -129,7 +129,9 @@ class GraphAlgo(GraphAlgoInterface):
 
     def shortest_path(self, id1: int, id2: int) -> (float, list):
         """
-        Returns the shortest path from node id1 to node id2 using Dijkstra's Algorithm
+        Returns the shortest path from node id1 to node id2 using Dijkstra's Algorithm.
+        Adds to every vertex, the previous vertex which the vertex "came from",
+        finally, sends to help function seek_path() which returns a Tuple of the distance and the list of the route.
         @param id1: The start node id
         @param id2: The end node id
         @return: The distance of the path, a list of the vertices IDs which the path goes through
@@ -164,6 +166,11 @@ class GraphAlgo(GraphAlgoInterface):
     def connected_component(self, id1: int, reset: int = 0) -> list:
         """
         Finds the Strongly Connected Component (SCC) which node id1 is a part of.
+        Help function sub_graph returns the reversed graph of all the vertices we can get from
+        vertex id1 and the list of all these vertices using DFS algorithm.
+        Then, help function direction() returns the list of all vertices which we got
+        to from the reverse graph using DFS algorithm.
+        Finally, help function union(), unites both lists nd returns the Strongly Connected Component (SCC)
         @param id1: The vertex id
         @param reset: int
         @return: The list of nodes in the SCC
@@ -211,7 +218,7 @@ class GraphAlgo(GraphAlgoInterface):
 
     def sub_graph(self, id1: int) -> Tuple[DiGraph, List]:
         """
-        Returns the graph reverse and the list of neighbors which you can get to from a vertex
+        Returns the graph reverse and the list of neighbors which you can get to, from a vertex
         @param: int - id1
         @return: Tuple[DiGraph, List]
         """
@@ -236,6 +243,8 @@ class GraphAlgo(GraphAlgoInterface):
     def connected_components(self) -> List[list]:
         """
         Finds all the Strongly Connected Components (SCC) in the graph.
+        Passes through every vertex and sends it to the function connected_component()
+        as long as the vertex is unvisited yet.
         @return: The list of all SCC
                  If the graph is None, the function returns an empty list []
         """
@@ -325,10 +334,10 @@ if __name__ == '__main__':
     print()
 
     print("<----------------------------------------------------------------------->")
-    g.load_from_json("../data/G_10_80_0.json")
+    g.load_from_json("../data/G_10_80_1.json")
     s_all = time.time()
     start = time.time()
-    print("Our Python implementation: \nGraph G_10_80_0 coordinates: (0,8)")
+    print("Our Python implementation: \nGraph G_10_80_1 coordinates: (0,8)")
     print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 8))
@@ -337,9 +346,9 @@ if __name__ == '__main__':
     print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
-    g.load_from_json("../data/G_100_800_0.json")
+    g.load_from_json("../data/G_100_800_1.json")
     start = time.time()
-    print("Our Python implementation: \nGraph G_100_800_0 coordinates: (12,95)")
+    print("Our Python implementation: \nGraph G_100_800_1 coordinates: (12,95)")
     print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
     print("Shortest path: ", g.shortest_path(12, 95))
@@ -348,9 +357,9 @@ if __name__ == '__main__':
     print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
-    g.load_from_json("../data/G_1000_8000_0.json")
+    g.load_from_json("../data/G_1000_8000_1.json")
     start = time.time()
-    print("Our Python implementation: \nGraph G_1000_8000_0 coordinates: (10,850)")
+    print("Our Python implementation: \nGraph G_1000_8000_1 coordinates: (10,850)")
     print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
     print("Shortest path: ", g.shortest_path(10, 850))
@@ -359,9 +368,9 @@ if __name__ == '__main__':
     print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
-    g.load_from_json("../data/G_10000_80000_0.json")
+    g.load_from_json("../data/G_10000_80000_1.json")
     start = time.time()
-    print("Our Python implementation: \nGraph G_10000_80000_0 coordinates: (0,9999)")
+    print("Our Python implementation: \nGraph G_10000_80000_1 coordinates: (0,9999)")
     print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 9999))
@@ -370,9 +379,9 @@ if __name__ == '__main__':
     print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
-    g.load_from_json("../data/G_20000_160000_0.json")
+    g.load_from_json("../data/G_20000_160000_1.json")
     start = time.time()
-    print("Our Python implementation: \nGraph G_20000_160000_0 coordinates: (0, 19999)")
+    print("Our Python implementation: \nGraph G_20000_160000_1 coordinates: (0, 19999)")
     print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 19999))
@@ -381,9 +390,9 @@ if __name__ == '__main__':
     print(f"Connected component with vertex 0: {len(g.connected_component(0))} runtime {time.time() - start}")
     print("<----------------------------------------------------------------------->")
 
-    g.load_from_json("../data/G_30000_240000_0.json")
+    g.load_from_json("../data/G_30000_240000_1.json")
     start = time.time()
-    print("Our Python implementation: \nGraph G_30000_240000_0 coordinates: (0, 5000)")
+    print("Our Python implementation: \nGraph G_30000_240000_1 coordinates: (0, 5000)")
     print(f"Connected components {len(g.connected_components())} runtime {time.time() - start}")
     start = time.time()
     print("Shortest path: ", g.shortest_path(0, 5000))

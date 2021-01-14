@@ -1,6 +1,5 @@
 import unittest
 from Ex3.src.Node import Node
-from Ex3.src.DiGraph import DiGraph
 
 
 class MyTestCase(unittest.TestCase):
@@ -30,16 +29,26 @@ class MyTestCase(unittest.TestCase):
 
 
     def test_remove_inside(self):
-        pass
+        node1 = Node(1)
+        self.assertIsNotNone(node1)
+        node1.add_inside(2, 13)
+        node1.add_inside(3, 12)
+        self.assertEqual(2, len(node1.get_inside()))
+        node1.remove_inside(3)
+        self.assertEqual(1, len(node1.get_inside()))
+        node1.remove_inside(2)
+        self.assertEqual(0, len(node1.get_inside()))
 
     def test_remove_outside(self):
-        pass
-
-    def test_get_outside(self):
-        pass
-
-    def test_get_inside(self):
-        pass
+        node1 = Node(1)
+        self.assertIsNotNone(node1)
+        node1.add_outside(5, 124)
+        node1.add_outside(7, 12)
+        self.assertEqual(2, len(node1.get_outside()))
+        node1.remove_outside(35)
+        self.assertEqual(2, len(node1.get_outside()))
+        node1.remove_outside(7)
+        self.assertEqual(1, len(node1.get_outside()))
 
 
 if __name__ == '__main__':

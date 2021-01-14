@@ -81,10 +81,14 @@ class DiGraphTest(unittest.TestCase):
         for i in range(1, 10):
             g.add_node(i)
             g.add_edge(0, i, i * 2.0)
+
         self.assertEqual(g.get_mc(), 19)
+        g.remove_node(1)
+        self.assertEqual(20,g.get_mc())
         for i in range(1, 10):
             g.remove_edge(0, i)
-        self.assertEqual(g.get_mc(), 28)
+        self.assertEqual(g.get_mc(),28)
+
 
     def test_add_node(self):
         g = DiGraph()

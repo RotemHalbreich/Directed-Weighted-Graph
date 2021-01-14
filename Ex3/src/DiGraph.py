@@ -1,11 +1,10 @@
 from GraphAlgoInterface import GraphAlgoInterface
-
 from Node import Node
 from GraphInterface import GraphInterface
 
 
 class DiGraph(GraphInterface):
-    """This abstract class represents an interface of a graph."""
+    """This class represents a directed weighted graph"""
     mc = 0
 
     def __init__(self):
@@ -101,17 +100,23 @@ class DiGraph(GraphInterface):
         self.mc += 1
         return True
 
-    def remove_edge(self, node_id1: int, node_id2: int) -> bool:
+    def remove_edge(self, node_id1: int, node_id2: int, updateMC: bool = True) -> bool:
         """
         Removes an edge from the graph.
         @param node_id1: The start node of the edge
         @param node_id2: The end node of the edge
+        @param updateMC: checks if increment in mc is needed
         @return: True if the edge was removed successfully, False o.w.
 
         Note: If such an edge does not exists the function will do nothing
         """
+        if self.graph.get(node_id1) is None or self.graph.get(node_id2)is None:
+            return False
         b = self.graph[node_id1].remove_outside(node_id2) and self.graph[node_id2].remove_inside(node_id1)
-        return self.increment(b)
+        if updateMC:
+            return self.increment(b)
+        else:
+            return b
 
     def remove_node(self, node_id: int) -> bool:
         """
@@ -130,8 +135,8 @@ class DiGraph(GraphInterface):
             tmp.add(i)
 
         for i in tmp:
-            self.remove_edge(node_id, i)
-            self.remove_edge(i, node_id)
+            self.remove_edge(node_id, i, updateMC=False)
+            self.remove_edge(i, node_id, updateMC=False)
 
         del self.graph[node_id]
         self.mc += 1

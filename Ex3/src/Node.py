@@ -1,4 +1,5 @@
 class Node:
+    """This class represents the vertices of a graph"""
 
     def __init__(self, key: int, tag: int = -1, value: float = 0, pos: tuple = None):
         self.key = key
