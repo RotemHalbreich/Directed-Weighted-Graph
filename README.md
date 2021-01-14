@@ -14,7 +14,7 @@
 - *Compare between our Java's and Python's running time.*
 - *Compare between our code and [NetworkX's](https://networkx.org/documentation/stable/tutorial.html) code.*
 
-###  *[The comparison is for methods:](https://github.com/shakedaviad55/Ex3/wiki/Runtime-Comparison)*
+### *[The comparison is for methods:](https://github.com/shakedaviad55/Ex3/wiki/Runtime-Comparison)*
 
 *Function* | *Explanation*
 ------------------------------------------------------|----------------------------------------------------
