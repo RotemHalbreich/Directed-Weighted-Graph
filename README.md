@@ -1,12 +1,12 @@
 # *Ex3:*
 ----------------------------------------------------------------------------------------------------------
-## *Object Oriented Programming project in Python - Ariel University*
+# *Object Oriented Programming project in Python - Ariel University*
 ----------------------------------------------------------------------------------------------------------
 ## :bar_chart: *Based on "Graph Theory" subject, dealing with directed weighted graph*
 ### *Implementation of the following classes:*
-- *Node() - represents the vertices of the graph*
-- *DiGraph() - represents a directed weighted graph*
-- *GraphAlgo() - represents the directed weighted graph's algorithms*
+- *[Node()](https://github.com/RotemHalbreich/Ex3/wiki/Node-Class) - represents the vertices of the graph*
+- *[DiGraph()](https://github.com/RotemHalbreich/Ex3/wiki/DiGraph-Class) - represents a directed weighted graph*
+- *[GraphAlgo()](https://github.com/RotemHalbreich/Ex3/wiki/GraphAlgo-Class) - represents the directed weighted graph's algorithms*
 
 ----------------------------------------------------------------------------------------------------------
 ### :question: *The purpose of the project:*
@@ -14,9 +14,9 @@
 - *Compare between our Java's and Python's running time.*
 - *Compare between our code and [NetworkX's](https://networkx.org/documentation/stable/tutorial.html) code.*
 >*The comparison is for methods:*
->> - *shortest_path()*
->> - *connected_component()* 
->> - *connected_components()*
+>> - *`shortest_path()`*
+>> - *`connected_component()`* 
+>> - *`connected_components()`*
 
 
 ----------------------------------------------------------------------------------------------------------
