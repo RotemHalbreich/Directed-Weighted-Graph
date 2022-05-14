@@ -1,7 +1,16 @@
-# *Ex3:*
+# *Object Oriented Programming project in Python Ex3 - Ariel University*
+
+## :pencil: *Authors of this project:*
+| *Rotem Halbreich  -  GitHub: https://github.com/RotemHalbreich* | *Shaked Aviad  -  GitHub: https://github.com/shakedaviad55* |
+------------------------------------------------------|----------------------------------------------------
 ----------------------------------------------------------------------------------------------------------
-# *Object Oriented Programming project in Python - Ariel University*
+## :white_check_mark: *Initialize the project:*
+*Clone the project using the Command Line by typing the command:*
+
+`git clone https://github.com/shakedaviad55/Ex3.git`
+
 ----------------------------------------------------------------------------------------------------------
+
 ## :bar_chart: *Based on "Graph Theory" subject, dealing with directed weighted graph*
 ### *Implementation of the following classes:*
 - *[Node()](https://github.com/shakedaviad55/Ex3/wiki/Node-Class) - represents the vertices of the graph*
@@ -14,7 +23,7 @@
 - *Compare between our Java's and Python's running time.*
 - *Compare between our code and [NetworkX's](https://networkx.org/documentation/stable/tutorial.html) code.*
 
-### *[The comparison is for methods:](https://github.com/shakedaviad55/Ex3/wiki/Runtime-Comparison)*
+## *[The comparison is for methods:](https://github.com/shakedaviad55/Ex3/wiki/Runtime-Comparison)*
 
 *Function* | *Explanation*
 ------------------------------------------------------|----------------------------------------------------
@@ -23,20 +32,26 @@
  :small_red_triangle_down:*`connected_components()`* | *Finds all the Strongly Connected Components (SCC) in the graph, passes through every vertex and sends it to the function connected_component() as long as the vertex is unvisited yet.*
 
 ----------------------------------------------------------------------------------------------------------
-### :pencil: *Authors of this project:*
-| *Rotem Halbreich  -  GitHub: https://github.com/RotemHalbreich* | *Shaked Aviad  -  GitHub: https://github.com/shakedaviad55* |
-------------------------------------------------------|----------------------------------------------------
-----------------------------------------------------------------------------------------------------------
-### :white_check_mark: *Initialize the project:*
-*Clone the project using the Command Line by typing the command:*
 
-`git clone https://github.com/shakedaviad55/Ex3.git`
+# :clock130: *Runtime Comparison*
+## :computer: *Computer Specifications:*
 
-----------------------------------------------------------------------------------------------------------
+- `Device`  Dell XPS 13-inch 9370
+- `Processor`  Intel(R) Cote(TM) i7-8550U CPU @ 1.80GHz-1.99GHz
+- `Memory RAM`  16GB
+- `Operating system`  Windows 10 Pro
+- `System type`  64-bit
+
+![Shortest Path](https://user-images.githubusercontent.com/66558110/104599199-261a6a00-5680-11eb-8943-f40d7ed65b18.png)
+-----------------------------------------------------------------------------------------------------------------------------
+![Connected Component](https://user-images.githubusercontent.com/66558110/104599255-35011c80-5680-11eb-990f-e912b46b5132.png)
+-----------------------------------------------------------------------------------------------------------------------------
+![Connected Components](https://user-images.githubusercontent.com/66558110/104599298-40ecde80-5680-11eb-84fc-986dc1716c4c.png)
+-----------------------------------------------------------------------------------------------------------------------------
+
 ## :camera: *[matplotlib](https://matplotlib.org/) - Example for data A5 graph from Json format:*
 ![A5](https://user-images.githubusercontent.com/66558110/104127304-16daaa00-536a-11eb-8676-76ed0a17373d.png)
 
-----------------------------------------------------------------------------------------------------------
 
 ## :books: *External sources:*
   *Subject:* | *Link:*
@@ -54,9 +69,7 @@
 ------------------------------------------------------|----------------------------------------------------
  ![Dijkstra's algorithm](https://upload.wikimedia.org/wikipedia/commons/5/57/Dijkstra_Animation.gif)|![DFS](https://miro.medium.com/max/1280/0*miG6xdyYzdvrB67S.gif)
 
-----------------------------------------------------------------------------------------------------------
 ## :book: *Wiki:*
-*Please be sure to check out our [Wiki](https://github.com/shakedaviad55/Ex3/wiki) for more information about the project!*
+### *Please be sure to check out our [Wiki](https://github.com/shakedaviad55/Ex3/wiki) for more information about the project!*
 
-----------------------------------------------------------------------------------------------------------
-### *Enjoy, and please share!* :smile:
+# *Enjoy, and please share!* :smile:
