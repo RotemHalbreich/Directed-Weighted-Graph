@@ -1,4 +1,4 @@
-# *Object Oriented Programming project in Python Ex3 - Ariel University*
+# *OOP project in Python Ex3 - Ariel University*
 
 ## :pencil: *Authors of this project:*
 | *Rotem Halbreich  -  GitHub: https://github.com/RotemHalbreich* | *Shaked Aviad  -  GitHub: https://github.com/shakedaviad55* |
